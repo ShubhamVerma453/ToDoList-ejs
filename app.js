@@ -37,6 +37,10 @@ app.get("/", (req, res) => {
     res.render("index", { ejs: day});
 });
 
+app.post("/", (req, res)=>{
+    console.log(req.body.item)
+});
+
 app.listen(3000, () => {
     console.log("listening");
 });
