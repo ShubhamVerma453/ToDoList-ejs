@@ -4,6 +4,9 @@ body{
     flex-direction: column;
     text-align: center;
 }
+h3{
+    margin: 0;
+}
 .box{
     background-color: #F6F7D4;
     width: 30%;
@@ -31,5 +34,18 @@ button{
     border: none;
     border-radius: 50%;
     background-color: #28DF99;
+}
+ul{
+    list-style-type: none;
+}
+li{
+    font-size: large;
+    padding-bottom: 3%;
+}
+li:last-child{
+    padding-bottom: 5%;
+}
 
+.strike{
+    text-decoration: line-through;
 }
