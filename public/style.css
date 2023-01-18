@@ -1,0 +1,35 @@
+body{
+    background-image: -webkit-linear-gradient(65deg, #28DF99 60%, #D2F6C5 0);
+    height: 97vmin;
+    flex-direction: column;
+    text-align: center;
+}
+.box{
+    background-color: #F6F7D4;
+    width: 30%;
+    border-radius: 10px;
+    margin: auto;
+    position: relative;
+}
+input{
+    width: 81%;
+    height: 3rem;
+    padding-left: 3%;
+    padding-right: 16%;
+    font-size: large;
+    border: none;
+    border-bottom: 1px solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+button{
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    height: 2rem;
+    width: 2rem;
+    border: none;
+    border-radius: 50%;
+    background-color: #28DF99;
+
+}

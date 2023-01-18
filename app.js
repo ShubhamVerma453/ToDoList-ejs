@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
         month : "long"
     }
     let day = date.toLocaleDateString("en-US", option);
-    res.render("index", { ejs: day, list: items});
+    res.render("index", { title: day, list: items});
 });
 
 app.post("/", (req, res)=>{
