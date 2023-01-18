@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-let items = ["tast"];
+let items = [];
 
 const app = express();
 app.set('view engine', 'ejs');
