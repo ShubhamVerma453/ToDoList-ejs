@@ -19,7 +19,7 @@
     <div class="box">
         <form action="/" method="post">
             <input type="text" name="item" id="" class="input-task" autocomplete="off" placeholder="new item">
-            <button type="submit">+</button>
+            <button type="submit" name="btn" value=<%=title%> >+</button>
         </form>
         <% for(var i=0; i<list.length; i++) {%>
             <div class="item">
