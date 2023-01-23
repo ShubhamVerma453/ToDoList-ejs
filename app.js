@@ -10,20 +10,36 @@ const workSchema = new mongoose.Schema({ name : String });
 const General = mongoose.model("General", genSchema);
 const Work = mongoose.model("Work", workSchema);
 
+const app = express();
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: "true" }));
+app.use(express.static("public"));
+
 function getGeneral() {
+    console.log("getGeneral Called");
     let item = [];
+    console.log("before "+typeof(item));
+
     General.find(null, {name:1},(err, data)=>{
         if(err){
           console.log(err);
         } else {
             data.forEach(element => {
+                console.log("data "+typeof(element.name));
                 item.push(element.name);
             });
+            console.log("after "+typeof(item));
+            console.log(item);
+            
         }
+        return item;
     });
+    console.log("-----"+item);
     return item;
+    
 };
 function getWork() {
+    console.log("getWork Called");
     let item = [];
     Work.find(null, {name:1},(err, data)=>{
         if(err){
@@ -38,24 +54,21 @@ function getWork() {
 };
 
 function setGeneral(n) {
-    General.insertOne({ name : n }).then(function(){
-        console.log("Data inserted")  // Success
-    }).catch(function(error){
-        console.log(error)      // Failure
+    console.log(n);
+    General.insertMany([{ name : n }], (err, data)=>{
+        if(err)
+            console.log(err);
+        else
+            console.log(data);
     });
 };
 function setWork(n) {
-    Work.insertOne({ name : n }).then(function(){
+    Work.insertMany([{ name : n }]).then(function(){
         console.log("Data inserted")  // Success
     }).catch(function(error){
         console.log(error)      // Failure
     });
 };
-
-const app = express();
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({ extended: "true" }));
-app.use(express.static("public"));
 
 app.get("/", (req, res) => {
     
@@ -69,6 +82,7 @@ app.get("/", (req, res) => {
     res.render("index", { title: currTitle, list: getGeneral() });
 });
 app.post("/", (req, res) => {
+    console.log(req.body.item);
     if (req.body.btn == "Work") {
         setWork(req.body.item);
         res.redirect("/work");
