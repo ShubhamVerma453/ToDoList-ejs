@@ -3,6 +3,14 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const port = process.env.port || 3000;
 
+mongoose.set("strictQuery", false);
+mongoose.connect("mongodb://127.0.0.1:27017/todolistDB", { useNewUrlParser: true });
+const genSchema = new mongoose.Schema({ name : String });
+const workSchema = new mongoose.Schema({ name : String });
+const General = mongoose.model("General", genSchema);
+const Work = mongoose.model("Work", genSchema);
+
+
 const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: "true" }));
