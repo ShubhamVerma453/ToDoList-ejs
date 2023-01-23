@@ -1,8 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-
-let items = [];
-let work = [];
+const mongoose = require("mongoose");
+const port = process.env.port || 3000;
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -22,11 +21,9 @@ app.get("/", (req, res) => {
 });
 app.post("/", (req, res) => {
     if (req.body.btn == "Work") {
-        console.log("work");
         work.push(req.body.item);
         res.redirect("/work");
     } else {
-        console.log("item");
         items.push(req.body.item);
         res.redirect("/");
     }
@@ -36,6 +33,6 @@ app.get("/work", (req, res) => {
     res.render("index", { title: currTitle, list: work });
 });
 
-app.listen(3000, () => {
-    console.log("listening");
+app.listen(port, () => {
+    console.log("listening "+port);
 });
