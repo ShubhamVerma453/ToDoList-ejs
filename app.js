@@ -37,6 +37,21 @@ function getWork() {
     return item;
 };
 
+function setGeneral(n) {
+    General.insertOne({ name : n }).then(function(){
+        console.log("Data inserted")  // Success
+    }).catch(function(error){
+        console.log(error)      // Failure
+    });
+};
+function setWork(n) {
+    Work.insertOne({ name : n }).then(function(){
+        console.log("Data inserted")  // Success
+    }).catch(function(error){
+        console.log(error)      // Failure
+    });
+};
+
 const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: "true" }));
@@ -55,10 +70,10 @@ app.get("/", (req, res) => {
 });
 app.post("/", (req, res) => {
     if (req.body.btn == "Work") {
-        work.push(req.body.item);
+        setWork(req.body.item);
         res.redirect("/work");
     } else {
-        items.push(req.body.item);
+        setGeneral(req.body.item);
         res.redirect("/");
     }
 });
