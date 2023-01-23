@@ -8,8 +8,34 @@ mongoose.connect("mongodb://127.0.0.1:27017/todolistDB", { useNewUrlParser: true
 const genSchema = new mongoose.Schema({ name : String });
 const workSchema = new mongoose.Schema({ name : String });
 const General = mongoose.model("General", genSchema);
-const Work = mongoose.model("Work", genSchema);
+const Work = mongoose.model("Work", workSchema);
 
+function getGeneral() {
+    let item = [];
+    General.find(null, {name:1},(err, data)=>{
+        if(err){
+          console.log(err);
+        } else {
+            data.forEach(element => {
+                item.push(element.name);
+            });
+        }
+    });
+    return item;
+};
+function getWork() {
+    let item = [];
+    Work.find(null, {name:1},(err, data)=>{
+        if(err){
+          console.log(err);
+        } else {
+            data.forEach(element => {
+                item.push(element.name);
+            });
+        }
+    });
+    return item;
+};
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -25,7 +51,7 @@ app.get("/", (req, res) => {
         month: "long"
     }
     let currTitle = date.toLocaleDateString("en-US", option);
-    res.render("index", { title: currTitle, list: items });
+    res.render("index", { title: currTitle, list: getGeneral() });
 });
 app.post("/", (req, res) => {
     if (req.body.btn == "Work") {
@@ -38,7 +64,7 @@ app.post("/", (req, res) => {
 });
 app.get("/work", (req, res) => {
     currTitle = "Work List";
-    res.render("index", { title: currTitle, list: work });
+    res.render("index", { title: currTitle, list: getWork() });
 });
 
 app.listen(port, () => {
