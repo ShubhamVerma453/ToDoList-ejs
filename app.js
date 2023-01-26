@@ -25,14 +25,13 @@ async function getGeneral() {
                 item.push(element.name);
             });
         }
-        return item;
     }).clone().catch(function(err){ console.log(err)});
     console.log("in fun  "+item);
     return item;
 };
-function getWork() {
+async function getWork() {
     let item = [];
-    Work.find(null, {name:1},(err, data)=>{
+    await Work.find(null, {name:1},(err, data)=>{
         if(err){
           console.log(err);
         } else {
@@ -71,7 +70,7 @@ app.get("/", async (req, res) => {
     }
     let currTitle = date.toLocaleDateString("en-US", option);
     let listItem = await getGeneral();
-    console.log("here i need "+listItem);
+    // console.log("here i need "+listItem);
     res.render("index", { title: currTitle, list: listItem});
 });
 app.post("/", (req, res) => {
@@ -84,10 +83,10 @@ app.post("/", (req, res) => {
         res.redirect("/");
     }
 });
-app.get("/work", (req, res) => {
+app.get("/work", async (req, res) => {
     currTitle = "Work List";
-    let listItem = getWork();
-    console.log("in work "+listItem);
+    let listItem = await getWork();
+    // console.log("in work "+listItem);
     res.render("index", { title: currTitle, list: listItem});
 });
 
