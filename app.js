@@ -22,12 +22,12 @@ async function getGeneral() {
           console.log(err);
         } else {
             data.forEach(element => {
-                console.log("data "+typeof(element.name));
                 item.push(element.name);
             });
         }
         return item;
     }).clone().catch(function(err){ console.log(err)});
+    console.log("in fun  "+item);
     return item;
 };
 async function getWork() {
@@ -70,7 +70,9 @@ app.get("/", (req, res) => {
         month: "long"
     }
     let currTitle = date.toLocaleDateString("en-US", option);
-    res.render("index", { title: currTitle, list: getGeneral() });
+    let listItem = getGeneral();
+    console.log("here i need "+listItem);
+    res.render("index", { title: currTitle, list: listItem});
 });
 app.post("/", (req, res) => {
     console.log(req.body.item);
@@ -84,7 +86,9 @@ app.post("/", (req, res) => {
 });
 app.get("/work", (req, res) => {
     currTitle = "Work List";
-    res.render("index", { title: currTitle, list: getWork() });
+    let listItem = getWork();
+    console.log("in work "+listItem);
+    res.render("index", { title: currTitle, list: listItem});
 });
 
 app.listen(port, () => {
