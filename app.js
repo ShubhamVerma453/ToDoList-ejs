@@ -30,9 +30,9 @@ async function getGeneral() {
     console.log("in fun  "+item);
     return item;
 };
-async function getWork() {
+function getWork() {
     let item = [];
-    await Work.find(null, {name:1},(err, data)=>{
+    Work.find(null, {name:1},(err, data)=>{
         if(err){
           console.log(err);
         } else {
@@ -61,7 +61,7 @@ function setWork(n) {
     });
 };
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
     
     let date = new Date();
     let option = {
@@ -70,7 +70,7 @@ app.get("/", (req, res) => {
         month: "long"
     }
     let currTitle = date.toLocaleDateString("en-US", option);
-    let listItem = getGeneral();
+    let listItem = await getGeneral();
     console.log("here i need "+listItem);
     res.render("index", { title: currTitle, list: listItem});
 });
