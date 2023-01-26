@@ -15,12 +15,9 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: "true" }));
 app.use(express.static("public"));
 
-function getGeneral() {
-    console.log("getGeneral Called");
+async function getGeneral() {
     let item = [];
-    console.log("before "+typeof(item));
-
-    General.find(null, {name:1},(err, data)=>{
+    await General.find(null, {name:1},(err, data)=>{
         if(err){
           console.log(err);
         } else {
@@ -28,20 +25,14 @@ function getGeneral() {
                 console.log("data "+typeof(element.name));
                 item.push(element.name);
             });
-            console.log("after "+typeof(item));
-            console.log(item);
-            
         }
         return item;
-    });
-    console.log("-----"+item);
+    }).clone().catch(function(err){ console.log(err)});
     return item;
-    
 };
-function getWork() {
-    console.log("getWork Called");
+async function getWork() {
     let item = [];
-    Work.find(null, {name:1},(err, data)=>{
+    await Work.find(null, {name:1},(err, data)=>{
         if(err){
           console.log(err);
         } else {
@@ -49,7 +40,7 @@ function getWork() {
                 item.push(element.name);
             });
         }
-    });
+    }).clone().catch(function(err){ console.log(err)});
     return item;
 };
 
