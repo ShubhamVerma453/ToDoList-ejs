@@ -22,7 +22,7 @@ async function getGeneral() {
           console.log(err);
         } else {
             data.forEach(element => {
-                item.push(element.name);
+                item.push(element);
             });
         }
     }).clone().catch(function(err){ console.log(err)});
@@ -36,7 +36,7 @@ async function getWork() {
           console.log(err);
         } else {
             data.forEach(element => {
-                item.push(element.name);
+                item.push(element);
             });
         }
     }).clone().catch(function(err){ console.log(err)});
@@ -89,6 +89,11 @@ app.get("/work", async (req, res) => {
     // console.log("in work "+listItem);
     res.render("index", { title: currTitle, list: listItem});
 });
+
+app.post("/delete", (req, res)=>{
+    console.log(req.body);
+    res.redirect("/");
+})
 
 app.listen(port, () => {
     console.log("listening "+port);
