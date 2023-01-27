@@ -15,7 +15,7 @@ app.use(express.static("public"));
 
 async function getData() {
     let item = [];
-    await General.find(null, {name:1},(err, data)=>{
+    await General.find(null, (err, data)=>{
         if(err){
           console.log(err);
         } else {
@@ -27,27 +27,12 @@ async function getData() {
     // console.log("in fun  "+item);
     return item;
 };
-async function getWork() {
-    let item = [];
-    await Work.find(null, {name:1},(err, data)=>{
-        if(err){
-          console.log(err);
-        } else {
-            data.forEach(element => {
-                item.push(element);
-            });
-        }
-    }).clone().catch(function(err){ console.log(err)});
-    return item;
-};
 
 function setData(n, t) {
-    console.log(t + " "+n);
-    General.insertMany([{ name : n, type:t }], (err, data)=>{
+    // console.log(t + " "+n);
+    General.insertMany([{ name : n, type:t }], (err)=>{
         if(err)
             console.log(err);
-        else
-            console.log(data);
     });
 };
 
@@ -60,14 +45,12 @@ app.get("/", async (req, res) => {
     }
     let currTitle = date.toLocaleDateString("en-US", option);
     let listItem = await getData();
-    console.log("here i need "+listItem);
-    // res.render("index", { title: currTitle, list: listItem, listType:"general"});
-    res.render("index", { title: currTitle, list: listItem});
+    // console.log("here i need "+listItem);
+    res.render("index", { title: currTitle, list: listItem, listType:"general"});
 });
 app.get("/work", async (req, res) => {
     currTitle = "Work List";
     let listItem = await getData();
-    // console.log("in work "+listItem);
     res.render("index", { title: currTitle, list: listItem, listType:"work"});
 });
 app.post("/", (req, res) => {
@@ -81,9 +64,24 @@ app.post("/", (req, res) => {
     }
 });
 
-app.post("/delete", (req, res)=>{
-    console.log(req.body.item);
-    res.redirect("/");
+app.post("/delete", async (req, res)=>{
+    // console.log(req.body.item);
+    let type;
+    await General.findOne({_id:req.body.item}, (err, data)=>{
+        if(err){
+          console.log(err);
+        } else {
+            type = data.type;
+        }
+    }).clone().catch(function(err){ console.log(err)});
+
+    await General.deleteOne({_id : req.body.item});
+
+    // console.log("type = "+type);
+    if(type == "work")
+        res.redirect("/work");
+    else
+        res.redirect("/");
 })
 
 app.listen(port, () => {

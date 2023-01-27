@@ -21,7 +21,7 @@
             <button type="submit" name="btn" value=<%=title%> >+</button>
         </form>
         <% list.forEach(item => {  %>
-            <!-- <% if(item.type == listType) {  %> -->
+            <% if(listType == item.type){ %>
                 <form action="/delete" method="post">
                     <div class="item">
                         <input type="checkbox" onchange="this.form.submit()" class="hell" name="item" value = "<%= item._id %>">
@@ -29,8 +29,8 @@
                             <%= item.name %>
                         </p>
                     </div>
-                </form>
-            <!-- <% } %> -->
+                </form> 
+            <% } %> 
         <% }); %>
     </div>
 </body>
