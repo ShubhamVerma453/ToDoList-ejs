@@ -21,20 +21,18 @@
             <button type="submit" name="btn" value=<%=title%> >+</button>
         </form>
         <% list.forEach(item => {  %>
-            <form action="/delete" method="post">
-                <div class="item">
-                    <input type="checkbox" onchange="this.form.submit()" name="item" value = "<%= item._id %>">
-                    <p>
-                        <%= item.name %>
-                    </p>
-                </div>
-            </form>
+            <!-- <% if(item.type == listType) {  %> -->
+                <form action="/delete" method="post">
+                    <div class="item">
+                        <input type="checkbox" onchange="this.form.submit()" class="hell" name="item" value = "<%= item._id %>">
+                        <p>
+                            <%= item.name %>
+                        </p>
+                    </div>
+                </form>
+            <!-- <% } %> -->
         <% }); %>
     </div>
 </body>
 
 </html>
-
-<!-- data.forEach(element => {
-    item.push(element.name);
-}); -->
