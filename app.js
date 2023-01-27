@@ -54,7 +54,7 @@ app.get("/work", async (req, res) => {
     res.render("index", { title: currTitle, list: listItem, listType:"work"});
 });
 app.post("/", (req, res) => {
-    console.log(req.body.item);
+    // console.log(req.body.item);
     if (req.body.btn == "Work") {
         setData(req.body.item, "work");
         res.redirect("/work");
